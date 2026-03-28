@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar"
 import SearchBar from "../components/SearchBar"
 import BookmarkCard from "../components/BookmarkCard"
 import EmptyState from "../components/EmptyState"
+import { searchBookmarks } from "../api/bookmarks"
 import AddBookmarkPanel from "../components/AddBookmarkPanel"
 import { mockBookmarks } from "../data/mockBookmarks"
 
@@ -11,15 +12,16 @@ function HomePage() {
   const [results, setResults] = useState(null)
   const [isPanelOpen, setIsPanelOpen] = useState(false)
 
-  function handleSearch() {
-    if (!searchQuery.trim()) return
-    const filtered = mockBookmarks.filter(
-      (b) =>
-        b.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        b.description.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-    setResults(filtered)
+  async function handleSearch() {
+  if (!searchQuery.trim()) return
+  try {
+    const response = await searchBookmarks(searchQuery)
+    setResults(response.data)
+  } catch (error) {
+    console.log("Search error:", error)
+    setResults([])
   }
+}
 
   return (
     <div className="min-h-screen bg-gray-50">

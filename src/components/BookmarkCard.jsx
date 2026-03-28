@@ -18,9 +18,11 @@ function BookmarkCard({ bookmark }) {
         ))}
       </div>
 
-      <span className="text-xs text-green-600 font-medium mt-3 block">
-        {Math.round(bookmark.score * 100)}% match
-      </span>
+      {bookmark.score && (
+  <span className="text-xs text-green-600 font-medium mt-3 block">
+    {Math.round(bookmark.score * 100)}% match
+  </span>
+)}
     </a>
   )
 }
