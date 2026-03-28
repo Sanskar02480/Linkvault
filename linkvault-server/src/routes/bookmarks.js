@@ -26,22 +26,23 @@ router.post('/', async (req, res) => {
   }
 })
 
-router.search('/' ,async(req , res) => {
-    try{
-        const {q}= req.query
-        if(!q) return res.status(400).json({message:"Query required"})
-        
-        const bookmarks =await Bookmark.find({
-            $or : [
-                {title : { $regex :q , $options:'i'}},
-                {description : {$regex :q , $options :'i'}},
-                {tags : {$regex : q , $options:'i'}}
-            ]
-        })
-        res.json(bookmarks)
-    } catch (error) {
-        res.status(500).json({message: error.message})
-    }
+router.get('/search', async (req, res) => {
+  try {
+    const { q } = req.query
+    if (!q) return res.status(400).json({ message: "Query is required" })
+
+    const bookmarks = await Bookmark.find({
+      $or: [
+        { title: { $regex: q, $options: 'i' } },
+        { description: { $regex: q, $options: 'i' } },
+        { tags: { $regex: q, $options: 'i' } }
+      ]
+    })
+
+    res.json(bookmarks)
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
 })
 
 export default router
