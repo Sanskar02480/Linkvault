@@ -1,5 +1,6 @@
 import express from 'express'
 import Bookmark from '../models/Bookmark.js'
+import scrapeUrl from '../utils/scraper.js'
 
 const router = express.Router()
 
@@ -14,11 +15,23 @@ router.get('/', async (req, res) => {
 })
 
 // POST save a new bookmark
+
+
 router.post('/', async (req, res) => {
   try {
-    const { url, title, description, tags, note } = req.body
+    const { url, note, tags } = req.body
     if (!url) return res.status(400).json({ message: "URL is required" })
-    const bookmark = new Bookmark({ url, title, description, tags, note })
+
+    const { title, description } = await scrapeUrl(url)
+
+    const bookmark = new Bookmark({
+      url,
+      title,
+      description,
+      tags,
+      note
+    })
+
     await bookmark.save()
     res.status(201).json(bookmark)
   } catch (error) {
