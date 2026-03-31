@@ -5,6 +5,7 @@ const bookmarkSchema = new mongoose.Schema({
   title: { type: String, default: "" },
   description: { type: String, default: "" },
   tags: { type: [String], default: [] },
+  embedding: { type: [Number], default: [] },
   note: { type: String, default: "" }
 }, { timestamps: true })
 

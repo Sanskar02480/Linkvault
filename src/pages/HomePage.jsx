@@ -5,6 +5,7 @@ import BookmarkCard from "../components/BookmarkCard"
 import EmptyState from "../components/EmptyState"
 import { searchBookmarks } from "../api/bookmarks"
 import AddBookmarkPanel from "../components/AddBookmarkPanel"
+import { vectorSearch } from "../api/bookmarks"
 import { mockBookmarks } from "../data/mockBookmarks"
 
 function HomePage() {
@@ -15,7 +16,7 @@ function HomePage() {
   async function handleSearch() {
   if (!searchQuery.trim()) return
   try {
-    const response = await searchBookmarks(searchQuery)
+    const response = await vectorSearch(searchQuery)
     setResults(response.data)
   } catch (error) {
     console.log("Search error:", error)

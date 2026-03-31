@@ -4,7 +4,6 @@ import { useState } from "react"
 
 function AddBookmarkPanel({ isOpen, onClose }) {
   const [url, setUrl] = useState("")
-  const [title, setTitle] = useState("")
 const [tags, setTags] = useState("")
   const [note, setNote] = useState("")
 
