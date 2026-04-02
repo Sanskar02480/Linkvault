@@ -82,6 +82,15 @@ router.get('/vector-search' ,async (req , res) => {
   }
 })
 
+router.delete('/:id', async (req, res) => {
+  try {
+    await Bookmark.findByIdAndDelete(req.params.id)
+    res.json({ message: "Bookmark deleted" })
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+})
+
 router.get('/search', async (req, res) => {
   try {
     const { q } = req.query

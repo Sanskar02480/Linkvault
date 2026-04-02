@@ -1,30 +1,31 @@
 import { X } from "lucide-react"
-import { saveBookmark } from "../api/bookmarks"
 import { useState } from "react"
+import { saveBookmark } from "../api/bookmarks"
 
 function AddBookmarkPanel({ isOpen, onClose }) {
   const [url, setUrl] = useState("")
-const [tags, setTags] = useState("")
   const [note, setNote] = useState("")
+  const [tags, setTags] = useState("")
 
   async function handleSave() {
-  if (!url.trim()) return
-  try {
-    await saveBookmark({ 
-      url,
-  title,
-  note,
-  tags: tags.split(",").map(t => t.trim()).filter(Boolean)
-     })
-    setUrl("")
-    setNote("")
-    onClose()
-    alert("Bookmark saved!")
-  } catch (error) {
-    console.log("Save error:", error)
-    alert("Something went wrong. Try again.")
+    if (!url.trim()) return
+    try {
+      await saveBookmark({
+        url,
+        note,
+        tags: tags.split(",").map(t => t.trim()).filter(Boolean)
+      })
+      setUrl("")
+      setNote("")
+      setTags("")
+      onClose()
+      alert("Bookmark saved!")
+    } catch (error) {
+      console.log("Save error:", error)
+      alert("Something went wrong. Try again.")
+    }
   }
-}
+
   return (
     <>
       {isOpen && (
@@ -60,27 +61,17 @@ const [tags, setTags] = useState("")
               className="border border-gray-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100 transition-all"
             />
           </div>
-        <div className="flex flex-col gap-1">
-  <label className="text-sm font-medium text-gray-700">Title</label>
-  <input
-    type="text"
-    value={title}
-    onChange={(e) => setTitle(e.target.value)}
-    placeholder="Article title"
-    className="border border-gray-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100 transition-all"
-  />
-</div>
 
-<div className="flex flex-col gap-1">
-  <label className="text-sm font-medium text-gray-700">Tags (comma separated)</label>
-  <input
-    type="text"
-    value={tags}
-    onChange={(e) => setTags(e.target.value)}
-    placeholder="react, frontend, javascript"
-    className="border border-gray-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100 transition-all"
-  />
-</div>
+          <div className="flex flex-col gap-1">
+            <label className="text-sm font-medium text-gray-700">Tags (comma separated)</label>
+            <input
+              type="text"
+              value={tags}
+              onChange={(e) => setTags(e.target.value)}
+              placeholder="react, frontend, javascript"
+              className="border border-gray-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100 transition-all"
+            />
+          </div>
 
           <div className="flex flex-col gap-1">
             <label className="text-sm font-medium text-gray-700">Note (optional)</label>
