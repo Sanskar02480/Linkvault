@@ -7,6 +7,12 @@ LinkVault is a full-stack intelligent bookmark manager built with a RAG (Retriev
 ## Live Demo
 https://linkvault-self.vercel.app/
 
+## Preview
+<img width="1911" height="949" alt="Image" src="https://github.com/user-attachments/assets/e8b3b755-b37a-4d0a-a37e-83d07745594e" />
+<img width="1898" height="963" alt="Image" src="https://github.com/user-attachments/assets/48a93ac9-fedb-46a6-96fb-9cd660a382e2" />
+<img width="1919" height="966" alt="Image" src="https://github.com/user-attachments/assets/b28ea0fa-a1aa-4ba2-9126-6f97791ae69d" />
+<img width="1900" height="973" alt="Image" src="https://github.com/user-attachments/assets/1812f5ee-2a73-45a2-bb0c-7daca6619fb8" />
+
 ## The Problem
 You save 50 links a week. Three weeks later you remember "there was an article about React hooks optimization" but can't find it because you don't remember the exact title or URL.
 
