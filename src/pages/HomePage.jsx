@@ -30,7 +30,7 @@ const features = [
   {
     icon: Zap,
     title: "Built on real AI",
-    description: "Powered by OpenAI embeddings and MongoDB Atlas Vector Search — the same tech used in production AI systems.",
+    description: "Powered by OpenAI embeddings and MongoDB Atlas Vector Search , the same tech used in production AI systems.",
     badge: "RAG Architecture"
   }
 ]
@@ -162,7 +162,7 @@ function HomePage() {
             </div>
             {!showSuggestions && (
               <p className="text-xs text-gray-400 text-center pb-2">
-                Try searching — "how React renders" or "MongoDB performance"
+                Try searching - "how React renders" or "MongoDB performance"
               </p>
             )}
           </div>
