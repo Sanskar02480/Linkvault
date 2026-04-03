@@ -11,23 +11,27 @@ import { motion, AnimatePresence } from "framer-motion"
 const features = [
   {
     icon: Link,
-    title: "Save anything instantly",
-    description: "Paste any link and we auto-fetch title & preview."
+    title: "Paste. Done.",
+    description: "Drop any URL and LinkVault fetches the title, description, and metadata automatically. Zero manual effort.",
+    badge: "Auto-scraping"
   },
   {
     icon: Search,
-    title: "Search by meaning",
-    description: "Find content even if you forget exact words."
+    title: "Search like you think",
+    description: "Forget exact titles. Search 'that React article about hooks' and find it instantly. AI understands intent.",
+    badge: "Semantic AI"
   },
   {
     icon: Tag,
-    title: "Smart organization",
-    description: "Tag and filter bookmarks effortlessly."
+    title: "Tags that actually work",
+    description: "Add comma-separated tags on save. Filter and browse your entire library in seconds.",
+    badge: "Organized"
   },
   {
     icon: Zap,
-    title: "AI powered",
-    description: "Semantic search using vector embeddings."
+    title: "Built on real AI",
+    description: "Powered by OpenAI embeddings and MongoDB Atlas Vector Search — the same tech used in production AI systems.",
+    badge: "RAG Architecture"
   }
 ]
 
@@ -207,42 +211,40 @@ function HomePage() {
           <>
             {/* FEATURES */}
             <div className="max-w-6xl mx-auto mt-20 px-4 w-full">
-              <p className="text-sm font-bold text-gray-600 uppercase tracking-wider text-center mb-10">
-                FEATURES
-              </p>
+            <p className="text-sm font-bold text-gray-400 uppercase tracking-widest text-center mb-10">
+  Why LinkVault
+</p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
   {features.map((feature, i) => {
     const Icon = feature.icon
     return (
       <motion.div
-        key={feature.title}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: i * 0.1 }}
-        whileHover={{ y: -6 }}
-        className="bg-white/80 backdrop-blur-xl border border-gray-200 
-        rounded-2xl px-6 py-7 shadow-sm hover:shadow-xl 
-        transition-all duration-300 flex flex-col items-start text-left"
-      >
-        
-        {/* ICON */}
-        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-100 to-purple-100 
-        flex items-center justify-center mb-5 shadow-sm">
-          <Icon size={22} className="text-orange-600" />
-        </div>
+  key={feature.title}
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: i * 0.1 }}
+  whileHover={{ y: -6 }}
+  className="bg-white/80 backdrop-blur-xl border border-gray-200 rounded-2xl px-6 py-7 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col items-start text-left relative overflow-hidden"
+>
+  <span className="absolute top-4 right-4 text-xs font-semibold text-orange-500 bg-orange-50 border border-orange-100 px-2.5 py-1 rounded-full">
+    {feature.badge}
+  </span>
 
-        {/* TITLE */}
-        <h3 className="text-base font-semibold text-gray-900 mb-2 leading-tight">
-          {feature.title}
-        </h3>
+  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-100 to-purple-100 flex items-center justify-center mb-5 shadow-sm">
+    <Icon size={22} className="text-orange-600" />
+  </div>
 
-        {/* DESCRIPTION */}
-        <p className="text-sm text-gray-500 leading-relaxed">
-          {feature.description}
-        </p>
+  <h3 className="text-base font-bold text-gray-900 mb-2 leading-tight">
+    {feature.title}
+  </h3>
 
-      </motion.div>
+  <p className="text-sm text-gray-500 leading-relaxed">
+    {feature.description}
+  </p>
+</motion.div>
+      
+     
     )
   })}
 </div>
@@ -254,31 +256,52 @@ function HomePage() {
 
               <div className="grid sm:grid-cols-3 gap-8">
                 {[
-                  { title: "Save Link", desc: "Paste any URL and store it instantly" },
-                  { title: "Tag & Organize", desc: "Categorize bookmarks for easy access" },
-                  { title: "Search Instantly", desc: "Find anything using AI-powered search" }
-                ].map((step, i) => (
-                  <motion.div
-                    key={i}
-                    whileHover={{ scale: 1.05 }}
-                    className="p-6 bg-white/80 backdrop-blur-xl border border-gray-200 rounded-2xl shadow-sm hover:shadow-xl transition text-left"
-                  >
-                    <div className="text-orange-500 font-bold text-lg mb-2">0{i + 1}</div>
-                    <p className="text-gray-900 font-semibold mb-1">{step.title}</p>
-                    <p className="text-sm text-gray-500">{step.desc}</p>
-                  </motion.div>
-                ))}
+  {
+    title: "Save any link",
+    desc: "Paste a URL — title and description are scraped automatically in the background.",
+    detail: "No forms. No friction."
+  },
+  {
+    title: "Tag and organize",
+    desc: "Add tags like 'react, performance' when saving. Your library stays clean from day one.",
+    detail: "Comma separated, zero effort."
+  },
+  {
+    title: "Find it instantly",
+    desc: "Search by idea months later. AI matches meaning, not just words.",
+    detail: "Powered by vector search."
+  }
+].map((step, i) => (
+  <motion.div
+    key={i}
+    whileHover={{ scale: 1.03 }}
+    className="p-6 bg-white/80 backdrop-blur-xl border border-gray-200 rounded-2xl shadow-sm hover:shadow-xl transition text-left relative overflow-hidden"
+  >
+    <div className="text-3xl font-black text-gray-100 absolute top-4 right-5 select-none">
+      0{i + 1}
+    </div>
+    <div className="w-8 h-8 rounded-lg bg-orange-500 flex items-center justify-center mb-4">
+      <span className="text-white font-bold text-sm">0{i + 1}</span>
+    </div>
+    <p className="text-gray-900 font-bold text-base mb-1">{step.title}</p>
+    <p className="text-sm text-gray-500 mb-3 leading-relaxed">{step.desc}</p>
+    <span className="text-xs font-semibold text-purple-500 bg-purple-50 border border-purple-100 px-2.5 py-1 rounded-full">
+      {step.detail}
+    </span>
+  </motion.div>
+))}
               </div>
             </div>
 
-            <div className="mt-24 mb-10 text-center">
-              <button
-                onClick={() => setIsPanelOpen(true)}
-                className="px-6 py-3 bg-orange-500 text-white rounded-xl shadow-lg hover:bg-orange-600 transition"
-              >
-                Add Your First Bookmark
-              </button>
-            </div>
+         <div className="mt-20 mb-16 text-center">
+  <p className="text-gray-400 text-sm mb-4">Ready to stop losing links?</p>
+  <button
+    onClick={() => setIsPanelOpen(true)}
+    className="px-8 py-3.5 bg-orange-500 text-white font-semibold rounded-xl shadow-lg hover:bg-orange-600 hover:shadow-xl transition-all duration-200 text-sm"
+  >
+    Save your first bookmark →
+  </button>
+</div>
           </>
         )}
       </div>
