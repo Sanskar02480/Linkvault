@@ -1,6 +1,7 @@
-import { X } from "lucide-react"
+import { X, Link2, Tag, StickyNote } from "lucide-react"
 import { useState } from "react"
 import { saveBookmark } from "../api/bookmarks"
+import { motion } from "framer-motion"
 
 function AddBookmarkPanel({ isOpen, onClose }) {
   const [url, setUrl] = useState("")
@@ -19,10 +20,8 @@ function AddBookmarkPanel({ isOpen, onClose }) {
       setNote("")
       setTags("")
       onClose()
-      alert("Bookmark saved!")
     } catch (error) {
       console.log("Save error:", error)
-      alert("Something went wrong. Try again.")
     }
   }
 
@@ -30,66 +29,92 @@ function AddBookmarkPanel({ isOpen, onClose }) {
     <>
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-40 z-40"
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
           onClick={onClose}
         />
       )}
 
       <div
-        className={`fixed top-0 right-0 h-full w-full max-w-md bg-white z-50 shadow-xl transform transition-transform duration-300 ${
+        className={`fixed top-0 right-0 h-full w-full max-w-md bg-white/80 backdrop-blur-xl z-50 shadow-2xl transform transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-          <h2 className="text-lg font-semibold text-gray-900">Save a Bookmark</h2>
+        {/* HEADER */}
+        <div className="flex items-center justify-between px-6 py-5 border-b border-gray-200">
+          <h2 className="text-xl font-semibold text-gray-900">Save Bookmark</h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
+            className="p-2 rounded-lg hover:bg-gray-100 transition"
           >
             <X size={20} />
           </button>
         </div>
 
-        <div className="px-6 py-6 flex flex-col gap-5">
-          <div className="flex flex-col gap-1">
-            <label className="text-sm font-medium text-gray-700">URL</label>
-            <input
-              type="text"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              placeholder="https://example.com/article"
-              className="border border-gray-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100 transition-all"
-            />
-          </div>
+        {/* FORM */}
+        <div className="px-6 py-6 flex flex-col gap-6">
 
-          <div className="flex flex-col gap-1">
-            <label className="text-sm font-medium text-gray-700">Tags (comma separated)</label>
-            <input
-              type="text"
-              value={tags}
-              onChange={(e) => setTags(e.target.value)}
-              placeholder="react, frontend, javascript"
-              className="border border-gray-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100 transition-all"
-            />
-          </div>
+          {/* URL */}
+          <motion.div whileFocus={{ scale: 1.02 }} className="flex flex-col gap-2">
+            <label className="text-sm font-medium text-gray-600">URL</label>
+            <div className="flex items-center gap-3 bg-white border border-gray-200 rounded-xl px-4 py-3 focus-within:border-orange-400 focus-within:ring-2 focus-within:ring-orange-100 transition">
+              <Link2 size={18} className="text-gray-400" />
+              <input
+                type="text"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                placeholder="https://example.com/article"
+                className="w-full outline-none text-sm bg-transparent"
+              />
+            </div>
+          </motion.div>
 
-          <div className="flex flex-col gap-1">
-            <label className="text-sm font-medium text-gray-700">Note (optional)</label>
-            <textarea
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
-              placeholder="Why are you saving this?"
-              rows={4}
-              className="border border-gray-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100 transition-all resize-none"
-            />
-          </div>
+          {/* TAGS */}
+          <motion.div whileFocus={{ scale: 1.02 }} className="flex flex-col gap-2">
+            <label className="text-sm font-medium text-gray-600">Tags</label>
+            <div className="flex items-center gap-3 bg-white border border-gray-200 rounded-xl px-4 py-3 focus-within:border-purple-400 focus-within:ring-2 focus-within:ring-purple-100 transition">
+              <Tag size={18} className="text-gray-400" />
+              <input
+                type="text"
+                value={tags}
+                onChange={(e) => setTags(e.target.value)}
+                placeholder="react, frontend, javascript"
+                className="w-full outline-none text-sm bg-transparent"
+              />
+            </div>
 
-          <button
+            {/* TAG PREVIEW */}
+            <div className="flex flex-wrap gap-2 mt-2">
+              {tags.split(",").map((tag, i) => tag.trim() && (
+                <span key={i} className="text-xs px-2 py-1 bg-orange-100 text-orange-600 rounded-full">
+                  #{tag.trim()}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* NOTE */}
+          <motion.div whileFocus={{ scale: 1.02 }} className="flex flex-col gap-2">
+            <label className="text-sm font-medium text-gray-600">Note</label>
+            <div className="flex gap-3 bg-white border border-gray-200 rounded-xl px-4 py-3 focus-within:border-pink-400 focus-within:ring-2 focus-within:ring-pink-100 transition">
+              <StickyNote size={18} className="text-gray-400 mt-1" />
+              <textarea
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
+                placeholder="Why are you saving this?"
+                rows={3}
+                className="w-full outline-none text-sm bg-transparent resize-none"
+              />
+            </div>
+          </motion.div>
+
+          {/* CTA */}
+          <motion.button
+            whileTap={{ scale: 0.97 }}
             onClick={handleSave}
-            className="w-full bg-gray-900 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-gray-700 transition-colors"
+            className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3 rounded-xl font-medium shadow-lg hover:shadow-xl transition"
           >
             Save Bookmark
-          </button>
+          </motion.button>
         </div>
       </div>
     </>
