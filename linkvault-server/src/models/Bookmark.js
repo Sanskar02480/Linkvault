@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 
 const bookmarkSchema = new mongoose.Schema({
+  userId: { type: String, required: true, index: true },  
   url: { type: String, required: true },
   title: { type: String, default: "" },
   description: { type: String, default: "" },
