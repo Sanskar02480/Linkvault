@@ -12,7 +12,9 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 app.use('/api/bookmarks', bookmarkRouter)
-app.get('/', (req, res) => res.send('Linkvault server is running ✅'))
+
+// ADD THIS — Render needs this to confirm service is alive
+app.get('/', (req, res) => res.send('OK'))
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
