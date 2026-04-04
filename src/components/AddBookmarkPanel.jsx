@@ -75,7 +75,7 @@ function AddBookmarkPanel({ isOpen, onClose, onSaved }) {
                 type="text"
                 value={tags}
                 onChange={(e) => setTags(e.target.value)}
-                placeholder="react, frontend"
+               
                 className="w-full outline-none text-sm bg-transparent"
               />
             </div>
