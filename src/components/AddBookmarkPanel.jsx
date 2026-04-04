@@ -16,15 +16,11 @@ function AddBookmarkPanel({ isOpen, onClose, onSaved }) {
         note,
         tags: tags.split(",").map(t => t.trim()).filter(Boolean)
       })
-
-      // 🔥 IMPORTANT FIX
       if (onSaved) onSaved(res.data)
-
       setUrl("")
       setNote("")
       setTags("")
       onClose()
-
     } catch (error) {
       console.log("Save error:", error)
     }
@@ -33,32 +29,28 @@ function AddBookmarkPanel({ isOpen, onClose, onSaved }) {
   return (
     <>
       {isOpen && (
-        <div
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
-          onClick={onClose}
-        />
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40" onClick={onClose} />
       )}
 
       <div
-        className={`fixed top-0 right-0 h-full w-full max-w-md bg-white/80 backdrop-blur-xl z-50 shadow-2xl transform transition-transform duration-300 ${
+        className={`fixed top-0 right-0 h-full w-full sm:max-w-md bg-white/90 backdrop-blur-xl z-50 shadow-2xl transform transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="flex items-center justify-between px-6 py-5 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900">Save Bookmark</h2>
+        <div className="flex items-center justify-between px-5 sm:px-6 py-4 sm:py-5 border-b border-gray-200">
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-900">Save Bookmark</h2>
           <button onClick={onClose} className="p-2 rounded-lg hover:bg-gray-100 transition">
             <X size={20} />
           </button>
         </div>
 
-        <div className="px-6 py-6 flex flex-col gap-6">
-
+        <div className="px-5 sm:px-6 py-5 sm:py-6 flex flex-col gap-5 sm:gap-6">
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium text-gray-600">URL</label>
             <div className="flex items-center gap-3 bg-white border border-gray-200 rounded-xl px-4 py-3 focus-within:border-orange-400 focus-within:ring-2 focus-within:ring-orange-100">
-              <Link2 size={18} className="text-gray-400" />
+              <Link2 size={18} className="text-gray-400 flex-shrink-0" />
               <input
-                type="text"
+                type="url"
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 placeholder="https://example.com/article"
@@ -68,27 +60,28 @@ function AddBookmarkPanel({ isOpen, onClose, onSaved }) {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium text-gray-600">Tags</label>
+            <label className="text-sm font-medium text-gray-600">Tags <span className="text-gray-400 font-normal">(comma separated)</span></label>
             <div className="flex items-center gap-3 bg-white border border-gray-200 rounded-xl px-4 py-3 focus-within:border-purple-400 focus-within:ring-2 focus-within:ring-purple-100">
-              <Tag size={18} className="text-gray-400" />
+              <Tag size={18} className="text-gray-400 flex-shrink-0" />
               <input
                 type="text"
                 value={tags}
                 onChange={(e) => setTags(e.target.value)}
-               
+                placeholder="react, frontend, javascript"
                 className="w-full outline-none text-sm bg-transparent"
               />
             </div>
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-medium text-gray-600">Note</label>
+            <label className="text-sm font-medium text-gray-600">Note <span className="text-gray-400 font-normal">(optional)</span></label>
             <div className="flex gap-3 bg-white border border-gray-200 rounded-xl px-4 py-3 focus-within:border-pink-400 focus-within:ring-2 focus-within:ring-pink-100">
-              <StickyNote size={18} className="text-gray-400 mt-1" />
+              <StickyNote size={18} className="text-gray-400 mt-1 flex-shrink-0" />
               <textarea
                 value={note}
                 onChange={(e) => setNote(e.target.value)}
                 rows={3}
+                placeholder="Why are you saving this?"
                 className="w-full outline-none text-sm bg-transparent resize-none"
               />
             </div>
@@ -97,7 +90,7 @@ function AddBookmarkPanel({ isOpen, onClose, onSaved }) {
           <motion.button
             whileTap={{ scale: 0.97 }}
             onClick={handleSave}
-            className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3 rounded-xl font-medium shadow-lg"
+            className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3 rounded-xl font-medium shadow-lg text-sm sm:text-base"
           >
             Save Bookmark
           </motion.button>

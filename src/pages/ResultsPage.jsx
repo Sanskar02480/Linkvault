@@ -35,15 +35,13 @@ function BookmarkCardWrapper({ bookmark, onDelete }) {
   return (
     <div className="relative">
       <BookmarkCard bookmark={bookmark} />
-
-      <div ref={menuRef} className="absolute top-4 right-10 z-10">
+      <div ref={menuRef} className="absolute top-3 sm:top-4 right-9 sm:right-10 z-10">
         <button
           onClick={(e) => { e.preventDefault(); setMenuOpen(!menuOpen) }}
           className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors"
         >
           <MoreVertical size={15} className="text-gray-400" />
         </button>
-
         <AnimatePresence>
           {menuOpen && (
             <motion.div
@@ -51,7 +49,7 @@ function BookmarkCardWrapper({ bookmark, onDelete }) {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: -4 }}
               transition={{ duration: 0.1 }}
-              className="absolute right-0 top-8 bg-white border border-gray-200 rounded-xl shadow-xl w-36 overflow-hidden z-20"
+              className="absolute right-0 top-8 bg-white border border-gray-200 rounded-xl shadow-xl w-32 sm:w-36 overflow-hidden z-20"
             >
               <button
                 onClick={handleDelete}
@@ -90,7 +88,7 @@ function ResultsPage() {
     fetchBookmarks()
   }, [])
 
-  function showToastMsg(msg) {
+  function showToastMessage(msg) {
     setToastMsg(msg)
     setShowToast(true)
     setTimeout(() => setShowToast(false), 2500)
@@ -98,12 +96,12 @@ function ResultsPage() {
 
   function handleNewBookmark(newBookmark) {
     setBookmarks((prev) => [newBookmark, ...prev])
-    showToastMsg("✅ Bookmark saved successfully")
+    showToastMessage("✅ Bookmark saved successfully")
   }
 
   function handleDelete(id) {
     setBookmarks((prev) => prev.filter((b) => b._id !== id))
-    showToastMsg("🗑️ Bookmark deleted")
+    showToastMessage("🗑️ Bookmark deleted")
   }
 
   return (
@@ -116,16 +114,16 @@ function ResultsPage() {
             initial={{ y: -40, opacity: 0 }}
             animate={{ y: 20, opacity: 1 }}
             exit={{ y: -40, opacity: 0 }}
-            className="fixed top-4 left-1/2 -translate-x-1/2 z-[100] bg-white border border-gray-200 shadow-xl rounded-xl px-5 py-3"
+            className="fixed top-4 left-1/2 -translate-x-1/2 z-[100] bg-white border border-gray-200 shadow-xl rounded-xl px-4 sm:px-5 py-2.5 sm:py-3 whitespace-nowrap"
           >
             <p className="text-sm font-medium text-gray-800">{toastMsg}</p>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <div className="pt-24 px-6 max-w-5xl mx-auto">
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">My Bookmarks</h1>
+      <div className="pt-20 sm:pt-24 px-4 sm:px-6 max-w-5xl mx-auto">
+        <div className="mb-5 sm:mb-6">
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">My Bookmarks</h1>
           {!loading && (
             <p className="text-sm text-gray-400 mt-1">
               {bookmarks.length} saved link{bookmarks.length !== 1 ? "s" : ""}
@@ -150,11 +148,11 @@ function ResultsPage() {
         )}
 
         {!loading && bookmarks.length === 0 && (
-          <div className="flex flex-col items-center justify-center mt-24 text-center">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-100 to-purple-100 flex items-center justify-center mb-4 text-2xl">
+          <div className="flex flex-col items-center justify-center mt-20 sm:mt-24 text-center px-4">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-orange-100 to-purple-100 flex items-center justify-center mb-4 text-2xl">
               🔖
             </div>
-            <p className="text-lg font-semibold text-gray-700 mb-1">No bookmarks yet</p>
+            <p className="text-base sm:text-lg font-semibold text-gray-700 mb-1">No bookmarks yet</p>
             <p className="text-sm text-gray-400 mb-6">Save your first link and it will appear here.</p>
             <button
               onClick={() => setIsPanelOpen(true)}
