@@ -55,17 +55,16 @@ router.get('/vector-search', async (req, res) => {
 
     const queryEmbedding = await generateEmbedding(q)
 
-    if (!queryEmbedding || queryEmbedding.length === 0) {
-      const bookmarks = await Bookmark.find({
-        userId,   // scoped
-        $or: [
-          { title: { $regex: q, $options: 'i' } },
-          { description: { $regex: q, $options: 'i' } },
-          { tags: { $regex: q, $options: 'i' } }
-        ]
-      })
-      return res.json(bookmarks)
-    }
+   if (!queryEmbedding || queryEmbedding.length === 0) {
+  const words = q.split(" ").filter(w => w.length > 2)
+  const regexConditions = words.flatMap(word => [
+    { title: { $regex: word, $options: 'i' } },
+    { description: { $regex: word, $options: 'i' } },
+    { tags: { $regex: word, $options: 'i' } }
+  ])
+  const bookmarks = await Bookmark.find({ $or: regexConditions })
+  return res.json(bookmarks)
+}
 
     const bookmarks = await Bookmark.aggregate([
       {
